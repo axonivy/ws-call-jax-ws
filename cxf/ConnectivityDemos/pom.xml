@@ -8,30 +8,58 @@
 	<version>7.1.0-SNAPSHOT</version>
 	<packaging>iar</packaging>
 
-	<parent>
-		<groupId>ch.ivyteam.ivy.project</groupId>
-		<artifactId>build.maven.iar</artifactId>
-		<version>7.1.0-SNAPSHOT</version>
-		<relativePath>../../build.maven/iar</relativePath>
-	</parent>
+	<properties>
+		<cxf.version>3.2.0</cxf.version>
+	</properties>
 
-	<!-- 
-	Maven dependencies are not available on engine runtime!
-	So the relevant JARs we're copied into the /lib directory.
 	<dependencies>
 		<dependency>
-		    <groupId>org.glassfish.jersey.security</groupId>
-		    <artifactId>oauth1-client</artifactId>
-		    <version>2.22.2</version>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
 		</dependency>
-	</dependencies> -->
-	
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-features-logging</artifactId>
+		    <version>${cxf.version}</version>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>com.axonivy.ivy.ci</groupId>
 				<artifactId>project-build-plugin</artifactId>
 				<extensions>true</extensions>
+				<version>7.0.0</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources.stockQuote</id>
+						<phase>generate-sources</phase>
+						<goals><goal>wsdl2java</goal></goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/StockQuoteService.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceRoot>${basedir}/src_generatedCxf</sourceRoot>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

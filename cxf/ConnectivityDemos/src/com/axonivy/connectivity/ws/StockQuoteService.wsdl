@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://quickstart.samples/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://quickstart.samples/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://quickstart.samples/">
+    <wsdl:documentation>StockQuoteService</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://quickstart.samples/xsd">
+            <xs:element name="getHelloWorld">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getHelloWorldResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updatePrice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="symbol" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="price" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getPrice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="symbol" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getPriceResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getToday">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTodayResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:date"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getPriceRequest">
+        <wsdl:part name="parameters" element="ns:getPrice"/>
+    </wsdl:message>
+    <wsdl:message name="getPriceResponse">
+        <wsdl:part name="parameters" element="ns:getPriceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="updatePriceRequest">
+        <wsdl:part name="parameters" element="ns:updatePrice"/>
+    </wsdl:message>
+    <wsdl:message name="getHelloWorldRequest">
+        <wsdl:part name="parameters" element="ns:getHelloWorld"/>
+    </wsdl:message>
+    <wsdl:message name="getHelloWorldResponse">
+        <wsdl:part name="parameters" element="ns:getHelloWorldResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTodayRequest">
+        <wsdl:part name="parameters" element="ns:getToday"/>
+    </wsdl:message>
+    <wsdl:message name="getTodayResponse">
+        <wsdl:part name="parameters" element="ns:getTodayResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="StockQuoteServicePortType">
+        <wsdl:operation name="getPrice">
+            <wsdl:input message="tns:getPriceRequest" wsaw:Action="urn:getPrice"/>
+            <wsdl:output message="tns:getPriceResponse" wsaw:Action="urn:getPriceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="updatePrice">
+            <wsdl:input message="tns:updatePriceRequest" wsaw:Action="urn:updatePrice"/>
+        </wsdl:operation>
+        <wsdl:operation name="getHelloWorld">
+            <wsdl:input message="tns:getHelloWorldRequest" wsaw:Action="urn:getHelloWorld"/>
+            <wsdl:output message="tns:getHelloWorldResponse" wsaw:Action="urn:getHelloWorldResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getToday">
+            <wsdl:input message="tns:getTodayRequest" wsaw:Action="urn:getToday"/>
+            <wsdl:output message="tns:getTodayResponse" wsaw:Action="urn:getTodayResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="StockQuoteServiceSoap11Binding" type="tns:StockQuoteServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getPrice">
+            <soap:operation soapAction="urn:getPrice" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updatePrice">
+            <soap:operation soapAction="urn:updatePrice" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getHelloWorld">
+            <soap:operation soapAction="urn:getHelloWorld" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getToday">
+            <soap:operation soapAction="urn:getToday" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="StockQuoteServiceSoap12Binding" type="tns:StockQuoteServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getPrice">
+            <soap12:operation soapAction="urn:getPrice" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updatePrice">
+            <soap12:operation soapAction="urn:updatePrice" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getHelloWorld">
+            <soap12:operation soapAction="urn:getHelloWorld" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getToday">
+            <soap12:operation soapAction="urn:getToday" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="StockQuoteServiceHttpBinding" type="tns:StockQuoteServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="getPrice">
+            <http:operation location="getPrice"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updatePrice">
+            <http:operation location="updatePrice"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getHelloWorld">
+            <http:operation location="getHelloWorld"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getToday">
+            <http:operation location="getToday"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="StockQuoteService">
+        <wsdl:port name="StockQuoteServiceHttpSoap11Endpoint" binding="tns:StockQuoteServiceSoap11Binding">
+            <soap:address location="http://zugtstweb:8080/axis2/services/StockQuoteService.StockQuoteServiceHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="StockQuoteServiceHttpsSoap11Endpoint" binding="tns:StockQuoteServiceSoap11Binding">
+            <soap:address location="https://zugtstweb:8443/axis2/services/StockQuoteService.StockQuoteServiceHttpsSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="StockQuoteServiceHttpSoap12Endpoint" binding="tns:StockQuoteServiceSoap12Binding">
+            <soap12:address location="http://zugtstweb:8080/axis2/services/StockQuoteService.StockQuoteServiceHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="StockQuoteServiceHttpsSoap12Endpoint" binding="tns:StockQuoteServiceSoap12Binding">
+            <soap12:address location="https://zugtstweb:8443/axis2/services/StockQuoteService.StockQuoteServiceHttpsSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="StockQuoteServiceHttpEndpoint" binding="tns:StockQuoteServiceHttpBinding">
+            <http:address location="http://zugtstweb:8080/axis2/services/StockQuoteService.StockQuoteServiceHttpEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="StockQuoteServiceHttpsEndpoint" binding="tns:StockQuoteServiceHttpBinding">
+            <http:address location="https://zugtstweb:8443/axis2/services/StockQuoteService.StockQuoteServiceHttpsEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
