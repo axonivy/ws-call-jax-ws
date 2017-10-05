@@ -28,6 +28,11 @@
 		    <artifactId>cxf-rt-features-logging</artifactId>
 		    <version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-ws-security</artifactId>
+		    <version>${cxf.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -56,7 +61,27 @@
 							</wsdlOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>generate-sources.personSoap</id>
+						<phase>generate-sources</phase>
+						<goals><goal>wsdl2java</goal></goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/secure/personServiceSoapSecure.wsdl</wsdl>
+									<extraargs>
+										<!-- valid args are documented here: http://cxf.apache.org/docs/wsdl-to-java.html -->
+										<extraarg>-verbose</extraarg>
+										<extraarg>-p</extraarg>
+										<!-- map to non default namespace to avoid conflicts with provision classes! -->
+										<extraarg>http://connectivity.axonivy.com/=person.service.soap.client</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
 				</executions>
+				
 				<configuration>
 					<sourceRoot>${basedir}/src_generatedCxf</sourceRoot>
 				</configuration>
