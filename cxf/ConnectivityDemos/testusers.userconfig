@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<userConfig>
+    <user>
+        <username>theBoss</username>
+        <password>theBoss</password>
+        <role>Manager</role>
+    </user>
+    <user>
+        <username>theEmployee</username>
+        <password>theEmployee</password>
+        <role>Employee</role>
+    </user>
+</userConfig>
