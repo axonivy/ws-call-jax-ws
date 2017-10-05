@@ -41,7 +41,8 @@
 	</dependencies>
 
 	<build>
-		<testOutputDirectory>classes</testOutputDirectory>
+		<testSourceDirectory>src_test</testSourceDirectory>
+		<testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
 
 		<plugins>
 			<plugin>
@@ -67,10 +68,13 @@
 				<extensions>true</extensions>
 				<executions>
 					<execution>
+						<id>start.engine</id>
+						<goals><goal>start-test-engine</goal></goals>
+						<phase>pre-integration-test</phase>
+					</execution>
+					<execution>
 						<id>deploy.project.under.test</id>
-						<goals>
-							<goal>deploy-iar</goal>
-						</goals>
+						<goals><goal>deploy-iar</goal></goals>
 						<phase>pre-integration-test</phase>
 						<configuration>
 							<deployIarFile>${ch.ivyteam.ivy.project.demo:connectivity-demos:iar}</deployIarFile>
@@ -78,12 +82,18 @@
 					</execution>
 					<execution>
 						<id>deploy.myself</id>
-						<goals>
-							<goal>deploy-iar</goal>
-						</goals>
+						<goals><goal>deploy-iar</goal></goals>
 						<phase>pre-integration-test</phase>
 					</execution>
+					<execution>
+						<id>stop.engine</id>
+						<goals><goal>stop-test-engine</goal></goals>
+						<phase>post-integration-test</phase>
+					</execution>
 				</executions>
+				<configuration>
+					<deployToEngineApplication>Portal</deployToEngineApplication>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
