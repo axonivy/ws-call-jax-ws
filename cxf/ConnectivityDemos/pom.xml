@@ -92,6 +92,18 @@
 							</wsdlOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>generate-sources.policies</id>
+						<phase>generate-sources</phase>
+						<goals><goal>wsdl2java</goal></goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/policy/RDE_demo1.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
 				</executions>
 				
 				<configuration>
