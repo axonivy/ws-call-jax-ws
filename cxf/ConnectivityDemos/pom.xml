@@ -80,6 +80,18 @@
 							</wsdlOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>generate-sources.mtom.attachments</id>
+						<phase>generate-sources</phase>
+						<goals><goal>wsdl2java</goal></goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/mtom/zhr_wsif_axonivy_BL_ZZ.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
 				</executions>
 				
 				<configuration>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions targetNamespace="urn:sap-com:document:sap:rfc:functions"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:tns="urn:sap-com:document:sap:rfc:functions">
+	<wsdl:documentation>
+		<sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl" />
+	</wsdl:documentation>
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified"
+			targetNamespace="urn:sap-com:document:sap:rfc:functions">
+			<xsd:simpleType name="char1">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char15">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="15" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char20">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="20" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char220">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="220" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char40">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="40" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric3">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric8">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="8" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="string">
+				<xsd:restriction base="xsd:string" />
+			</xsd:simpleType>
+			<xsd:complexType name="ZHR_WSIF_GET_EMPLOYEE_LIST">
+				<xsd:sequence>
+					<xsd:element name="USERNAME" type="tns:string" />
+					<xsd:element name="EVALUATION_FROM" type="tns:string" />
+					<xsd:element name="EVALUATION_TO" type="tns:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_EMPLOYEE_LIST">
+				<xsd:sequence>
+					<xsd:element name="EMPLOYEE_NO" type="tns:numeric8" />
+					<xsd:element name="TITEL" type="tns:char15" />
+					<xsd:element name="FIRST_NAME" type="tns:char40" />
+					<xsd:element name="LAST_NAME" type="tns:char40" />
+					<xsd:element name="DATE_OF_BIRTH" type="tns:numeric8" />
+					<xsd:element name="VALID_FROM" type="tns:numeric8" />
+					<xsd:element name="VALID_TO" type="tns:numeric8" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_MESSAGE_LINE">
+				<xsd:sequence>
+					<xsd:element name="TYPE" type="tns:char1" />
+					<xsd:element name="ID" type="tns:char20" />
+					<xsd:element name="NUMBER" type="tns:numeric3" />
+					<xsd:element name="MESSAGE" type="tns:char220" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_GET_TIME_EMPLOYEE">
+				<xsd:sequence>
+					<xsd:element name="EMPLOYEE_NO" type="tns:string" />
+					<xsd:element name="EVALUATION_FROM" type="tns:string" />
+					<xsd:element name="EVALUATION_TO" type="tns:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_PDF_DATA">
+				<xsd:sequence>
+					<xsd:element name="USERNAME" type="tns:string" />
+					<xsd:element name="PERIOD_YEAR" type="tns:string" />
+					<xsd:element name="PERIOD_MONTH" type="tns:string" />
+					<xsd:element name="EVALUATION_FROM" type="tns:string" />
+					<xsd:element name="EVALUATION_TO" type="tns:string" />
+					<xsd:element name="PDFDATA" type="xsd:base64Binary" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_EMPLOYEE_LIST_TAB">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZHR_WSIF_EMPLOYEE_LIST"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZHR_WSIF_MESSAGE_TAB">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZHR_WSIF_MESSAGE_LINE"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="Z_HR_WS_GET_EMPLOYEE_LIST">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="IS_WS_PARAMETER" type="tns:ZHR_WSIF_GET_EMPLOYEE_LIST" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Z_HR_WS_GET_EMPLOYEE_LISTResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ET_EMPLOYEE_LIST" type="tns:ZHR_WSIF_EMPLOYEE_LIST_TAB" />
+						<xsd:element name="ET_MESSAGES" type="tns:ZHR_WSIF_MESSAGE_TAB" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Z_HR_WS_GET_TIMESHEET_EMPLOYEE">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="IS_WS_PARAMETER" type="tns:ZHR_WSIF_GET_TIME_EMPLOYEE" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Z_HR_WS_GET_TIMESHEET_EMPLOYEEResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ES_PDF_DATA" type="tns:ZHR_WSIF_PDF_DATA" />
+						<xsd:element name="ET_MESSAGES" type="tns:ZHR_WSIF_MESSAGE_TAB" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="Z_HR_WS_GET_EMPLOYEE_LIST">
+		<wsdl:part name="parameters" element="tns:Z_HR_WS_GET_EMPLOYEE_LIST" />
+	</wsdl:message>
+	<wsdl:message name="Z_HR_WS_GET_EMPLOYEE_LISTResponse">
+		<wsdl:part name="parameter" element="tns:Z_HR_WS_GET_EMPLOYEE_LISTResponse" />
+	</wsdl:message>
+	<wsdl:message name="Z_HR_WS_GET_TIMESHEET_EMPLOYEE">
+		<wsdl:part name="parameters" element="tns:Z_HR_WS_GET_TIMESHEET_EMPLOYEE" />
+	</wsdl:message>
+	<wsdl:message name="Z_HR_WS_GET_TIMESHEET_EMPLOYEEResponse">
+		<wsdl:part name="parameter" element="tns:Z_HR_WS_GET_TIMESHEET_EMPLOYEEResponse" />
+	</wsdl:message>
+	<wsdl:portType name="zhr_wsif_axonivfy_mss">
+		<wsdl:operation name="Z_HR_WS_GET_EMPLOYEE_LIST">
+			<wsdl:input message="tns:Z_HR_WS_GET_EMPLOYEE_LIST" />
+			<wsdl:output message="tns:Z_HR_WS_GET_EMPLOYEE_LISTResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="Z_HR_WS_GET_TIMESHEET_EMPLOYEE">
+			<wsdl:input message="tns:Z_HR_WS_GET_TIMESHEET_EMPLOYEE" />
+			<wsdl:output message="tns:Z_HR_WS_GET_TIMESHEET_EMPLOYEEResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ZHR_WSIF_AXONIVY_MSS" type="tns:zhr_wsif_axonivfy_mss">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="Z_HR_WS_GET_EMPLOYEE_LIST">
+			<soap:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:zhr_wsif_axonivfy_mss:Z_HR_WS_GET_EMPLOYEE_LISTRequest"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Z_HR_WS_GET_TIMESHEET_EMPLOYEE">
+			<soap:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:zhr_wsif_axonivfy_mss:Z_HR_WS_GET_TIMESHEET_EMPLOYEERequest"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ZHR_WSIF_AXONIVY_MSS_soap12" type="tns:zhr_wsif_axonivfy_mss">
+		<wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="Z_HR_WS_GET_EMPLOYEE_LIST">
+			<wsoap12:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:zhr_wsif_axonivfy_mss:Z_HR_WS_GET_EMPLOYEE_LISTRequest"
+				style="document" />
+			<wsdl:input>
+				<wsoap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsoap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Z_HR_WS_GET_TIMESHEET_EMPLOYEE">
+			<wsoap12:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:zhr_wsif_axonivfy_mss:Z_HR_WS_GET_TIMESHEET_EMPLOYEERequest"
+				style="document" />
+			<wsdl:input>
+				<wsoap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsoap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ZHR_WSIF_AXONIVY_MSS">
+		<wsdl:port name="ZHR_WSIF_AXONIVY_MSS" binding="tns:ZHR_WSIF_AXONIVY_MSS">
+			<soap:address
+				location="http://AAD0SAP14.myhost.com/sap/bc/srt/rfc/sap/zhr_wsif_axonivfy_mss/004/zhr_wsif_axonivy_mss/zhr_wsif_axonivy_mss" />
+		</wsdl:port>
+		<wsdl:port name="ZHR_WSIF_AXONIVY_MSS_soap12" binding="tns:ZHR_WSIF_AXONIVY_MSS_soap12">
+			<wsoap12:address
+				location="http://AAD0SAP14.myhost.com/sap/bc/srt/rfc/sap/zhr_wsif_axonivfy_mss/004/zhr_wsif_axonivy_mss/zhr_wsif_axonivy_mss" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
