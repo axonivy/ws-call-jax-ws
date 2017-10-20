@@ -17,4 +17,4 @@ Caused by: java.lang.RuntimeException: Cannot create a secure XMLInputFactory
 	... 33 more
 ```
 - Solution: modify the runConfiguration of the Unit Test so that the Maven ClasspathContainer is before the Project.
-
+![runConfig](https://raw.githubusercontent.com/ivy-samples/ws-call-jax-ws/master/cxf/ConnectivityDemosTest/src_test/com/axonivy/connectivity/ws/putMvnClasspathBeforeProject.png)
