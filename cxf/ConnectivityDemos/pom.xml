@@ -119,6 +119,24 @@
 							</wsdlOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>generate-sources.zedal</id>
+						<phase>generate-sources</phase>
+						<goals><goal>wsdl2java</goal></goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/zedal/docservice.wsdl</wsdl>
+									<extraargs>
+										<!-- valid args are documented here: http://cxf.apache.org/docs/wsdl-to-java.html -->
+										<extraarg>-verbose</extraarg>
+										<!-- avoid errors as the same complex names is present multiple times in the WSDL. see NotificationMonitoringCheckImportTpFromInboxAllowed -->
+										<extraarg>-autoNameResolution</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
 				</executions>
 				
 				<configuration>
