@@ -1,0 +1,4007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="acme2_eakte"
+ targetNamespace="http://services.myhost.com/acme2/acme2_eakte.xsd"
+ xmlns:tns="http://services.myhost.com/acme2/acme2_eakte.xsd"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:eakte2="http://services.myhost.com/acme2/acme2_eakte.xsd"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="http://services.myhost.com/acme2/acme2_eakte.xsd"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:eakte2="http://services.myhost.com/acme2/acme2_eakte.xsd"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <simpleType name="datatype">
+   <restriction base="xsd:string">
+    <enumeration value="C"/>
+    <enumeration value="N"/>
+    <enumeration value="D"/>
+    <enumeration value="L"/>
+   </restriction>
+  </simpleType>
+  <simpleType name="ownertype">
+   <restriction base="xsd:string">
+    <enumeration value="primary"/>
+    <enumeration value="delegation"/>
+    <enumeration value="relinquished"/>
+   </restriction>
+  </simpleType>
+  <simpleType name="precheckresulttype">
+   <restriction base="xsd:string">
+    <enumeration value="download-precheck-identical"/>
+    <enumeration value="download-precheck-modified"/>
+   </restriction>
+  </simpleType>
+  <simpleType name="dbexpressiontype">
+   <restriction base="xsd:string">
+    <enumeration value="UnknownExpression"/>
+    <enumeration value="LogicalExpression"/>
+    <enumeration value="ComparativeExpression"/>
+    <enumeration value="Functioncall"/>
+    <enumeration value="FieldName"/>
+    <enumeration value="Value"/>
+   </restriction>
+  </simpleType>
+  <simpleType name="notificationmonitoringruleviolationaction">
+   <restriction base="xsd:string">
+    <enumeration value="block"/>
+    <enumeration value="warn"/>
+   </restriction>
+  </simpleType>
+  <complexType name="stringlist">
+   <sequence>
+    <element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="parameter">
+   <sequence>
+     <element name="field" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="parameterlist">
+   <sequence>
+    <element name="item" type="eakte2:parameter" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="column">
+   <sequence>
+     <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="type" type="eakte2:datatype" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="columnlist">
+   <sequence>
+    <element name="item" type="eakte2:column" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="tablerows">
+   <sequence>
+    <element name="item" type="eakte2:stringlist" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="table">
+   <sequence>
+     <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="columns" type="eakte2:columnlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="rows" type="eakte2:tablerows" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="signature">
+   <sequence>
+     <element name="subject-name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="subject-firma" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="subject-abteilung" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="issuer-name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="issuer-firma" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="issuer-abteilung" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="notbefore" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="notafter" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="ident" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="signaturestate" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="signaturedate" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="signaturemethod" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="sighint" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="serial" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="ocsp-state" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="ocsp-date" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="ocsp-revocationtime" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="attachment">
+   <sequence>
+     <element name="hashvalue" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="filename" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="issigned" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="docandfileid">
+   <sequence>
+     <element name="doc-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="file-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="participantnameaddress">
+   <sequence>
+     <element name="name1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name3" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name4" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="streetname1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="streetname2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="housenumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="pobox" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="postalcode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="city1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="city2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="state" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="participantregistration">
+   <sequence>
+     <element name="corporation" type="eakte2:participantnameaddress" minOccurs="1" maxOccurs="1"/>
+     <element name="site" type="eakte2:participantnameaddress" minOccurs="1" maxOccurs="1"/>
+     <element name="boxrole" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="boxnumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="providerrole" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="providernumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="isdefaultbox" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="logowner">
+   <sequence>
+     <element name="type" type="eakte2:ownertype" minOccurs="1" maxOccurs="1"/>
+     <element name="owner" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="filelogdocument">
+   <sequence>
+     <element name="doc-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="format" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="model" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="doctype" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="attachments" type="eakte2:attachment" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="signatures" type="eakte2:signature" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="rowdata" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+     <element name="privacy-level" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="filelogsubmission">
+   <sequence>
+     <element name="from" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="to" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="status" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="remark" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="fileloggrant">
+   <sequence>
+     <element name="from" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="to" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="status" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="filelogparameter">
+   <sequence>
+     <element name="priv" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="filelog">
+   <sequence>
+    <choice>
+     <element name="owner" type="eakte2:logowner" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="document" type="eakte2:filelogdocument" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="submission" type="eakte2:filelogsubmission" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grant" type="eakte2:fileloggrant" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parameter" type="eakte2:filelogparameter" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </choice>
+     <element name="log-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="date" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="fileview">
+   <sequence>
+     <element name="file-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="valid" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="log" type="eakte2:filelog" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="lastlogid" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentlogdocument">
+   <sequence>
+     <element name="log-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="attachments" type="eakte2:attachment" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="signatures" type="eakte2:signature" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="rowdata" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentlogsubmission">
+   <sequence>
+     <element name="from" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="to" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentloggrant">
+   <sequence>
+     <element name="from" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="to" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentlogparameter">
+   <sequence>
+     <element name="priv" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentlog">
+   <sequence>
+    <choice>
+     <element name="owner" type="eakte2:logowner" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="document" type="eakte2:documentlogdocument" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="submission" type="eakte2:documentlogsubmission" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grant" type="eakte2:documentloggrant" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parameter" type="eakte2:documentlogparameter" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </choice>
+     <element name="log-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="date" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="documentview">
+   <sequence>
+     <element name="doc-id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="valid" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="format" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="model" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="doctype" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="log" type="eakte2:documentlog" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="document-grantoptions">
+   <sequence>
+     <element name="docid" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="change" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="submit" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="grant" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="distribution" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="delegation" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="grantoptions">
+   <sequence>
+     <element name="documents" type="eakte2:document-grantoptions" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+     <element name="change" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="submit" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="grant" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="distribution" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="delegation" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="address">
+   <sequence>
+     <element name="address" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="subaddress" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="transportoption">
+   <sequence>
+     <element name="distribution" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="dekadenmeldung" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="storno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="sendoptions">
+   <sequence>
+   </sequence>
+  </complexType>
+  <complexType name="deliveroptions">
+   <sequence>
+     <element name="deferred" type="xsd:boolean" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="deliverylogquery">
+   <sequence>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="senderrole" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="senderno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiverrole" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiverno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sentnotbefore" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sentnotafter" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receivednotbefore" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receivednotafter" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="status" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="deliverymode" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiverdocid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="firstrow" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastrow" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sort" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="inboxcondition">
+   <sequence>
+     <element name="unread" type="xsd:boolean" minOccurs="1" maxOccurs="1" default="true"/>
+     <element name="from" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+     <element name="to" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="tablelist">
+   <sequence>
+    <element name="item" type="eakte2:table" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="syncoptions">
+   <sequence>
+     <element name="deleteSurplus" type="xsd:boolean" minOccurs="1" maxOccurs="1" default="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="dbexpression">
+   <sequence>
+     <element name="type" type="eakte2:dbexpressiontype" minOccurs="1" maxOccurs="1"/>
+     <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="left" type="eakte2:dbexpression" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="right" type="eakte2:dbexpression" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="templateimportoptions">
+   <sequence>
+     <element name="description" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="count" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="validfrom" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="validto" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="getcountfilter">
+   <sequence>
+     <element name="templateNos" type="eakte2:stringlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+   </sequence>
+  </complexType>
+  <complexType name="templateorder">
+   <sequence>
+     <element name="templateno" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="remark" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="orderedbyname" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="phoneno" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="email" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="notificationmonitoringdata">
+   <sequence>
+     <element name="totaltpweightpernotification" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="totaltpweightpergeneratorandwastecodethisyear" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="totalnumberoftransportspernotification" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="totalnumberofactivetransports" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationallowedweight" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationallowednumberoftransports" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationnumberoffinanciallyinsuredtransports" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationvalidfrom" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationvalidto" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="warningweightpercent" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="warningdaysbeforeexpiration" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="monitoringweightoffset" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+     <element name="smallandsmallestamountallowedweight" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="smallamountmonitoringenabled" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="warningweightsmallamount" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="smallestamountmonitoringenabled" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="warningweightsmallestamount" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="warningnumberoftransportspercent" type="xsd:double" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="warningnumberoffinanciallyinsuredtransportsbeforelimit" type="xsd:int" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="weightexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="warningweightexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="validityperiodexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="warningperiodexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="numberoftransportsexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="warningnumberoftransportsexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="numberoffinanciallyinsuredtransportsexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+     <element name="warningnumberoffinanciallyinsuredtransportsexceededaction" type="eakte2:notificationmonitoringruleviolationaction" minOccurs="1" maxOccurs="1"/>
+   </sequence>
+  </complexType>
+  <complexType name="addresssearchcriteria">
+   <sequence>
+     <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="street" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="housenumber" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="postalcode" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="city" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="state" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pobox" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <!-- operation request element -->
+  <element name="echo">
+   <complexType>
+    <sequence>
+     <element name="inputstring" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="result">
+   <complexType>
+    <sequence>
+     <element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="message2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="OpenSession">
+   <complexType>
+    <sequence>
+     <element name="subscriberid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="accountid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="authtype" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="authparameter" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="OpenSessionWPar">
+   <complexType>
+    <sequence>
+     <element name="subscriberid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="accountid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="authtype" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="authparameter" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parlist" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CloseSession">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetSessionParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetSessionParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetGlobalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetGlobalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CreateNewFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DeleteFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetCurrentViewOfFiles">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="fileviewlist">
+   <complexType>
+    <sequence>
+     <element name="views" type="eakte2:fileview" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetHistoryViewOfFiles">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetFileParticipant">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fieldname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="participant">
+   <complexType>
+    <sequence>
+     <element name="role" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="number" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name3" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="name4" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="streetname1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="streetname2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="housenumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="pobox" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="postalcode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="city1" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="city2" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetPublicLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetPublicLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetFilesByLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetFilesByLocalParameterResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetFilesByPublicLocalParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetFilesByPublicLocalParameterResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetDocumentParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pub" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetDocumentParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pub" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetDocumentsByParameter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="pub" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="parname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetDocumentsByParameterResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FindFilesToDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="docandfileidlist">
+   <complexType>
+    <sequence>
+     <element name="list" type="eakte2:docandfileid" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportDocumentToFileArea">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="min-privacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportDocumentToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="min-privacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportToDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportNewDocumentToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="privacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="AssignRefIdToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="refid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetFileByRefId">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="refid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetFileMainDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="MergeFiles">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid1" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid2" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="OpenSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiver" type="eakte2:address" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grantoptions" type="eakte2:grantoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="expirationdate" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CancelSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="HoldSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RejectSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CompleteSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetAllSubmissions">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetAllSubmissionsResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetNewSubmissions">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetNewSubmissionsResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetCompletedSubmissions">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetCompletedSubmissionsResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetRejectedSubmissions">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetRejectedSubmissionsResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DiscardFinishedSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetLocalSubmission">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="account" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RelinquishOwnership">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GrantAccessToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grantee" type="eakte2:address" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="expirationdate" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grantoptions" type="eakte2:grantoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RevokeAccessFromFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="grantee" type="eakte2:address" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SendDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiver" type="eakte2:address" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:sendoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DeliverDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="receiver" type="eakte2:address" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:deliveroptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="QueryDeliveryLog">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="querydef" type="eakte2:deliverylogquery" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FetchQueryResult">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="FetchQueryResultResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetDeliveryDetails">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetDeliveryDetailsResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="StartQuery">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="querydef" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="External">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="def" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportTransportDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:transportoption" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportTransportDocumentFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:transportoption" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docidsrc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetNextTransportDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="PeekNextTransportDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="TransportDocumentReceived">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetDocumentByIdent">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="idname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="idvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetDocumentByIdentResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetTransportDocumentByIdent">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="idname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="idvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetNextFileAreaDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="PeekNextFileAreaDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FileAreaDocumentReceived">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetCurrentViewOfDocuments">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="documentviewlist">
+   <complexType>
+    <sequence>
+     <element name="views" type="eakte2:documentview" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetHistoryViewOfDocuments">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetDocumentParticipant">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="logid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fieldname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ExportCurrentDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="lastident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="export">
+   <complexType>
+    <sequence>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ExportHistoryDocument">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ident" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SetDocumentOutdated">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="outdated" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DeleteDocumentFromFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RecoverDeletedDocumentToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="MoveDocumentToFile">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fromfileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tofileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ChangeDocumentPrivacyLevel">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="min-privacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="MarkDocumentAsReadByUser">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="readflag" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportDocumentToFileAreaFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="minprivacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="docidsrc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportDocumentToFileFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="minprivacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="docidsrc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportToDocumentInFileFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docidsrc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ImportNewDocumentToFileFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fileid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="privacylevel" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="docidsrc" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ListInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="condition" type="eakte2:inboxcondition" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="ListInboxResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="MarkDocumentsAsReadInInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RemoveDocumentsFromInbox">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docids" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ApplyInboxFilter">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="onlyUnread" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="UploadAttachment">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="filename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DownloadAttachment">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="hashvalue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="UploadToGlobalStorage">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="filename" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DownloadFromGlobalStorage">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="filename" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="expectedhash" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DownloadFromGlobalStorageResult">
+   <complexType>
+    <sequence>
+     <element name="precheckresult" type="eakte2:precheckresulttype" minOccurs="1" maxOccurs="1"/>
+     <element name="actualhash" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBInsert">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tabledata" type="eakte2:table" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBInsertResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBSynchronize">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tabledata" type="eakte2:table" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:syncoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBSynchronizeResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBLookup">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="key" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBLookupResponse">
+   <complexType>
+    <sequence>
+     <element name="tablelist" type="eakte2:tablelist" minOccurs="1" maxOccurs="1" nillable="false"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBSelect">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="fieldlist" type="eakte2:stringlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="whereclause" type="eakte2:dbexpression" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="sort" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBSelectResponse">
+   <complexType>
+    <sequence>
+     <element name="table" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBDelete">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="key" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBDeleteResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBDescribe">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBDescribeResponse">
+   <complexType>
+    <sequence>
+     <element name="tableinfo" type="eakte2:table" minOccurs="1" maxOccurs="1"/>
+     <element name="keyinfo" type="eakte2:stringlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DBFunction">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="tablename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="key" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="functionname" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="parameterlist" type="eakte2:parameterlist" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DBFunctionResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CreateTransportTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:templateimportoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DeleteTransportTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DeleteTransportTemplateResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ExportTransportTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetTransportTemplateCount">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="filter" type="eakte2:getcountfilter" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetTransportTemplateCountResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:parameterlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetObtainedTPNos">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="createdsince" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetObtainedTPNosResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:stringlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="PeekNextTransportTemplateOrder">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="PeekNextTransportTemplateOrderResult">
+   <complexType>
+    <sequence>
+     <element name="order" type="eakte2:templateorder" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="TransportTemplateOrderReceived">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="CreateFileareaTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="options" type="eakte2:templateimportoptions" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="DeleteFileareaTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="DeleteFileareaTemplateResponse">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ExportFileareaTemplate">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="templateno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetFileareaTemplateCount">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="filter" type="eakte2:getcountfilter" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="GetFileareaTemplateCountResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="eakte2:parameterlist" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="GetNotificationMonitoringData">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="documentformat" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="notificationno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="generatorno" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="wastecode" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="transportdate" type="xsd:date" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="getnotificationmonitoringdataresponse">
+   <complexType>
+    <sequence>
+     <element name="notificationmonitoringdata" type="eakte2:notificationmonitoringdata" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="NotificationMonitoringCheckImportTpFromInboxAllowed">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="docid" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="notificationmonitoringcheckimporttpfrominboxallowed">
+   <complexType>
+    <sequence>
+     <element name="errors" type="eakte2:stringlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+     <element name="warnings" type="eakte2:stringlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="FetchDocumentNumbers">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="range" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="resultlist">
+   <complexType>
+    <sequence>
+     <element name="message" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="list" type="eakte2:stringlist" minOccurs="1" maxOccurs="1" nillable="false"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RequestZksAddress">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="role" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="RequestZksAddressComplete">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="role" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="RequestZksAddressCompleteResponse">
+   <complexType>
+    <sequence>
+     <element name="site" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="corporation" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="SearchZksBoxes">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="role" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="corporation" type="eakte2:addresssearchcriteria" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="site" type="eakte2:addresssearchcriteria" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="participantregistrationlist">
+   <complexType>
+    <sequence>
+     <element name="numberhits" type="xsd:unsignedInt" minOccurs="1" maxOccurs="1"/>
+     <element name="list" type="eakte2:participantregistration" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="IsacmeParticipant">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="role" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="ProtobufCommunication">
+   <complexType>
+    <sequence>
+     <element name="sessionid" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="request" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="protobufcommunicationresponse">
+   <complexType>
+    <sequence>
+     <element name="base64data" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+
+</types>
+
+<message name="echo">
+ <part name="parameters" element="eakte2:echo"/>
+</message>
+
+<message name="result">
+ <part name="parameters" element="eakte2:result"/>
+</message>
+
+<message name="OpenSession">
+ <part name="parameters" element="eakte2:OpenSession"/>
+</message>
+
+<message name="OpenSessionWPar">
+ <part name="parameters" element="eakte2:OpenSessionWPar"/>
+</message>
+
+<message name="CloseSession">
+ <part name="parameters" element="eakte2:CloseSession"/>
+</message>
+
+<message name="GetSessionParameter">
+ <part name="parameters" element="eakte2:GetSessionParameter"/>
+</message>
+
+<message name="SetSessionParameter">
+ <part name="parameters" element="eakte2:SetSessionParameter"/>
+</message>
+
+<message name="SetGlobalParameter">
+ <part name="parameters" element="eakte2:SetGlobalParameter"/>
+</message>
+
+<message name="GetGlobalParameter">
+ <part name="parameters" element="eakte2:GetGlobalParameter"/>
+</message>
+
+<message name="CreateNewFile">
+ <part name="parameters" element="eakte2:CreateNewFile"/>
+</message>
+
+<message name="DeleteFile">
+ <part name="parameters" element="eakte2:DeleteFile"/>
+</message>
+
+<message name="GetCurrentViewOfFiles">
+ <part name="parameters" element="eakte2:GetCurrentViewOfFiles"/>
+</message>
+
+<message name="fileviewlist">
+ <part name="parameters" element="eakte2:fileviewlist"/>
+</message>
+
+<message name="GetHistoryViewOfFiles">
+ <part name="parameters" element="eakte2:GetHistoryViewOfFiles"/>
+</message>
+
+<message name="GetFileParticipant">
+ <part name="parameters" element="eakte2:GetFileParticipant"/>
+</message>
+
+<message name="participant">
+ <part name="parameters" element="eakte2:participant"/>
+</message>
+
+<message name="SetLocalParameter">
+ <part name="parameters" element="eakte2:SetLocalParameter"/>
+</message>
+
+<message name="SetPublicLocalParameter">
+ <part name="parameters" element="eakte2:SetPublicLocalParameter"/>
+</message>
+
+<message name="GetLocalParameter">
+ <part name="parameters" element="eakte2:GetLocalParameter"/>
+</message>
+
+<message name="GetPublicLocalParameter">
+ <part name="parameters" element="eakte2:GetPublicLocalParameter"/>
+</message>
+
+<message name="GetFilesByLocalParameterRequest">
+ <part name="parameters" element="eakte2:GetFilesByLocalParameter"/>
+</message>
+
+<message name="GetFilesByLocalParameterResponse">
+ <part name="parameters" element="eakte2:GetFilesByLocalParameterResponse"/>
+</message>
+
+<message name="GetFilesByPublicLocalParameterRequest">
+ <part name="parameters" element="eakte2:GetFilesByPublicLocalParameter"/>
+</message>
+
+<message name="GetFilesByPublicLocalParameterResponse">
+ <part name="parameters" element="eakte2:GetFilesByPublicLocalParameterResponse"/>
+</message>
+
+<message name="SetDocumentParameter">
+ <part name="parameters" element="eakte2:SetDocumentParameter"/>
+</message>
+
+<message name="GetDocumentParameter">
+ <part name="parameters" element="eakte2:GetDocumentParameter"/>
+</message>
+
+<message name="GetDocumentsByParameterRequest">
+ <part name="parameters" element="eakte2:GetDocumentsByParameter"/>
+</message>
+
+<message name="GetDocumentsByParameterResponse">
+ <part name="parameters" element="eakte2:GetDocumentsByParameterResponse"/>
+</message>
+
+<message name="FindFilesToDocument">
+ <part name="parameters" element="eakte2:FindFilesToDocument"/>
+</message>
+
+<message name="docandfileidlist">
+ <part name="parameters" element="eakte2:docandfileidlist"/>
+</message>
+
+<message name="ImportDocumentToFileArea">
+ <part name="parameters" element="eakte2:ImportDocumentToFileArea"/>
+</message>
+
+<message name="ImportDocumentToFile">
+ <part name="parameters" element="eakte2:ImportDocumentToFile"/>
+</message>
+
+<message name="ImportToDocument">
+ <part name="parameters" element="eakte2:ImportToDocument"/>
+</message>
+
+<message name="ImportNewDocumentToFile">
+ <part name="parameters" element="eakte2:ImportNewDocumentToFile"/>
+</message>
+
+<message name="AssignRefIdToFile">
+ <part name="parameters" element="eakte2:AssignRefIdToFile"/>
+</message>
+
+<message name="GetFileByRefId">
+ <part name="parameters" element="eakte2:GetFileByRefId"/>
+</message>
+
+<message name="SetFileMainDocument">
+ <part name="parameters" element="eakte2:SetFileMainDocument"/>
+</message>
+
+<message name="MergeFiles">
+ <part name="parameters" element="eakte2:MergeFiles"/>
+</message>
+
+<message name="OpenSubmission">
+ <part name="parameters" element="eakte2:OpenSubmission"/>
+</message>
+
+<message name="CancelSubmission">
+ <part name="parameters" element="eakte2:CancelSubmission"/>
+</message>
+
+<message name="HoldSubmission">
+ <part name="parameters" element="eakte2:HoldSubmission"/>
+</message>
+
+<message name="RejectSubmission">
+ <part name="parameters" element="eakte2:RejectSubmission"/>
+</message>
+
+<message name="CompleteSubmission">
+ <part name="parameters" element="eakte2:CompleteSubmission"/>
+</message>
+
+<message name="GetAllSubmissionsRequest">
+ <part name="parameters" element="eakte2:GetAllSubmissions"/>
+</message>
+
+<message name="GetAllSubmissionsResponse">
+ <part name="parameters" element="eakte2:GetAllSubmissionsResponse"/>
+</message>
+
+<message name="GetNewSubmissionsRequest">
+ <part name="parameters" element="eakte2:GetNewSubmissions"/>
+</message>
+
+<message name="GetNewSubmissionsResponse">
+ <part name="parameters" element="eakte2:GetNewSubmissionsResponse"/>
+</message>
+
+<message name="GetCompletedSubmissionsRequest">
+ <part name="parameters" element="eakte2:GetCompletedSubmissions"/>
+</message>
+
+<message name="GetCompletedSubmissionsResponse">
+ <part name="parameters" element="eakte2:GetCompletedSubmissionsResponse"/>
+</message>
+
+<message name="GetRejectedSubmissionsRequest">
+ <part name="parameters" element="eakte2:GetRejectedSubmissions"/>
+</message>
+
+<message name="GetRejectedSubmissionsResponse">
+ <part name="parameters" element="eakte2:GetRejectedSubmissionsResponse"/>
+</message>
+
+<message name="DiscardFinishedSubmission">
+ <part name="parameters" element="eakte2:DiscardFinishedSubmission"/>
+</message>
+
+<message name="SetLocalSubmission">
+ <part name="parameters" element="eakte2:SetLocalSubmission"/>
+</message>
+
+<message name="RelinquishOwnership">
+ <part name="parameters" element="eakte2:RelinquishOwnership"/>
+</message>
+
+<message name="GrantAccessToFile">
+ <part name="parameters" element="eakte2:GrantAccessToFile"/>
+</message>
+
+<message name="RevokeAccessFromFile">
+ <part name="parameters" element="eakte2:RevokeAccessFromFile"/>
+</message>
+
+<message name="SendDocument">
+ <part name="parameters" element="eakte2:SendDocument"/>
+</message>
+
+<message name="DeliverDocument">
+ <part name="parameters" element="eakte2:DeliverDocument"/>
+</message>
+
+<message name="QueryDeliveryLog">
+ <part name="parameters" element="eakte2:QueryDeliveryLog"/>
+</message>
+
+<message name="FetchQueryResult">
+ <part name="parameters" element="eakte2:FetchQueryResult"/>
+</message>
+
+<message name="FetchQueryResultResponse">
+ <part name="parameters" element="eakte2:FetchQueryResultResponse"/>
+</message>
+
+<message name="GetDeliveryDetails">
+ <part name="parameters" element="eakte2:GetDeliveryDetails"/>
+</message>
+
+<message name="GetDeliveryDetailsResponse">
+ <part name="parameters" element="eakte2:GetDeliveryDetailsResponse"/>
+</message>
+
+<message name="StartQuery">
+ <part name="parameters" element="eakte2:StartQuery"/>
+</message>
+
+<message name="External">
+ <part name="parameters" element="eakte2:External"/>
+</message>
+
+<message name="ImportTransportDocument">
+ <part name="parameters" element="eakte2:ImportTransportDocument"/>
+</message>
+
+<message name="ImportTransportDocumentFromInbox">
+ <part name="parameters" element="eakte2:ImportTransportDocumentFromInbox"/>
+</message>
+
+<message name="GetNextTransportDocument">
+ <part name="parameters" element="eakte2:GetNextTransportDocument"/>
+</message>
+
+<message name="PeekNextTransportDocument">
+ <part name="parameters" element="eakte2:PeekNextTransportDocument"/>
+</message>
+
+<message name="TransportDocumentReceived">
+ <part name="parameters" element="eakte2:TransportDocumentReceived"/>
+</message>
+
+<message name="GetDocumentByIdentRequest">
+ <part name="parameters" element="eakte2:GetDocumentByIdent"/>
+</message>
+
+<message name="GetDocumentByIdentResponse">
+ <part name="parameters" element="eakte2:GetDocumentByIdentResponse"/>
+</message>
+
+<message name="GetTransportDocumentByIdent">
+ <part name="parameters" element="eakte2:GetTransportDocumentByIdent"/>
+</message>
+
+<message name="GetNextFileAreaDocument">
+ <part name="parameters" element="eakte2:GetNextFileAreaDocument"/>
+</message>
+
+<message name="PeekNextFileAreaDocument">
+ <part name="parameters" element="eakte2:PeekNextFileAreaDocument"/>
+</message>
+
+<message name="FileAreaDocumentReceived">
+ <part name="parameters" element="eakte2:FileAreaDocumentReceived"/>
+</message>
+
+<message name="GetCurrentViewOfDocuments">
+ <part name="parameters" element="eakte2:GetCurrentViewOfDocuments"/>
+</message>
+
+<message name="documentviewlist">
+ <part name="parameters" element="eakte2:documentviewlist"/>
+</message>
+
+<message name="GetHistoryViewOfDocuments">
+ <part name="parameters" element="eakte2:GetHistoryViewOfDocuments"/>
+</message>
+
+<message name="GetDocumentParticipant">
+ <part name="parameters" element="eakte2:GetDocumentParticipant"/>
+</message>
+
+<message name="ExportCurrentDocument">
+ <part name="parameters" element="eakte2:ExportCurrentDocument"/>
+</message>
+
+<message name="export">
+ <part name="parameters" element="eakte2:export"/>
+</message>
+
+<message name="ExportHistoryDocument">
+ <part name="parameters" element="eakte2:ExportHistoryDocument"/>
+</message>
+
+<message name="SetDocumentOutdated">
+ <part name="parameters" element="eakte2:SetDocumentOutdated"/>
+</message>
+
+<message name="DeleteDocumentFromFile">
+ <part name="parameters" element="eakte2:DeleteDocumentFromFile"/>
+</message>
+
+<message name="RecoverDeletedDocumentToFile">
+ <part name="parameters" element="eakte2:RecoverDeletedDocumentToFile"/>
+</message>
+
+<message name="MoveDocumentToFile">
+ <part name="parameters" element="eakte2:MoveDocumentToFile"/>
+</message>
+
+<message name="ChangeDocumentPrivacyLevel">
+ <part name="parameters" element="eakte2:ChangeDocumentPrivacyLevel"/>
+</message>
+
+<message name="MarkDocumentAsReadByUser">
+ <part name="parameters" element="eakte2:MarkDocumentAsReadByUser"/>
+</message>
+
+<message name="ImportDocumentToFileAreaFromInbox">
+ <part name="parameters" element="eakte2:ImportDocumentToFileAreaFromInbox"/>
+</message>
+
+<message name="ImportDocumentToFileFromInbox">
+ <part name="parameters" element="eakte2:ImportDocumentToFileFromInbox"/>
+</message>
+
+<message name="ImportToDocumentInFileFromInbox">
+ <part name="parameters" element="eakte2:ImportToDocumentInFileFromInbox"/>
+</message>
+
+<message name="ImportNewDocumentToFileFromInbox">
+ <part name="parameters" element="eakte2:ImportNewDocumentToFileFromInbox"/>
+</message>
+
+<message name="ListInboxRequest">
+ <part name="parameters" element="eakte2:ListInbox"/>
+</message>
+
+<message name="ListInboxResponse">
+ <part name="parameters" element="eakte2:ListInboxResponse"/>
+</message>
+
+<message name="MarkDocumentsAsReadInInbox">
+ <part name="parameters" element="eakte2:MarkDocumentsAsReadInInbox"/>
+</message>
+
+<message name="RemoveDocumentsFromInbox">
+ <part name="parameters" element="eakte2:RemoveDocumentsFromInbox"/>
+</message>
+
+<message name="ApplyInboxFilter">
+ <part name="parameters" element="eakte2:ApplyInboxFilter"/>
+</message>
+
+<message name="UploadAttachment">
+ <part name="parameters" element="eakte2:UploadAttachment"/>
+</message>
+
+<message name="DownloadAttachment">
+ <part name="parameters" element="eakte2:DownloadAttachment"/>
+</message>
+
+<message name="UploadToGlobalStorage">
+ <part name="parameters" element="eakte2:UploadToGlobalStorage"/>
+</message>
+
+<message name="DownloadFromGlobalStorage">
+ <part name="parameters" element="eakte2:DownloadFromGlobalStorage"/>
+</message>
+
+<message name="DownloadFromGlobalStorageResult">
+ <part name="parameters" element="eakte2:DownloadFromGlobalStorageResult"/>
+</message>
+
+<message name="DBInsert">
+ <part name="parameters" element="eakte2:DBInsert"/>
+</message>
+
+<message name="DBInsertResponse">
+ <part name="parameters" element="eakte2:DBInsertResponse"/>
+</message>
+
+<message name="DBSynchronize">
+ <part name="parameters" element="eakte2:DBSynchronize"/>
+</message>
+
+<message name="DBSynchronizeResponse">
+ <part name="parameters" element="eakte2:DBSynchronizeResponse"/>
+</message>
+
+<message name="DBLookup">
+ <part name="parameters" element="eakte2:DBLookup"/>
+</message>
+
+<message name="DBLookupResponse">
+ <part name="parameters" element="eakte2:DBLookupResponse"/>
+</message>
+
+<message name="DBSelect">
+ <part name="parameters" element="eakte2:DBSelect"/>
+</message>
+
+<message name="DBSelectResponse">
+ <part name="parameters" element="eakte2:DBSelectResponse"/>
+</message>
+
+<message name="DBDelete">
+ <part name="parameters" element="eakte2:DBDelete"/>
+</message>
+
+<message name="DBDeleteResponse">
+ <part name="parameters" element="eakte2:DBDeleteResponse"/>
+</message>
+
+<message name="DBDescribe">
+ <part name="parameters" element="eakte2:DBDescribe"/>
+</message>
+
+<message name="DBDescribeResponse">
+ <part name="parameters" element="eakte2:DBDescribeResponse"/>
+</message>
+
+<message name="DBFunction">
+ <part name="parameters" element="eakte2:DBFunction"/>
+</message>
+
+<message name="DBFunctionResponse">
+ <part name="parameters" element="eakte2:DBFunctionResponse"/>
+</message>
+
+<message name="CreateTransportTemplate">
+ <part name="parameters" element="eakte2:CreateTransportTemplate"/>
+</message>
+
+<message name="DeleteTransportTemplate">
+ <part name="parameters" element="eakte2:DeleteTransportTemplate"/>
+</message>
+
+<message name="DeleteTransportTemplateResponse">
+ <part name="parameters" element="eakte2:DeleteTransportTemplateResponse"/>
+</message>
+
+<message name="ExportTransportTemplate">
+ <part name="parameters" element="eakte2:ExportTransportTemplate"/>
+</message>
+
+<message name="GetTransportTemplateCountRequest">
+ <part name="parameters" element="eakte2:GetTransportTemplateCount"/>
+</message>
+
+<message name="GetTransportTemplateCountResponse">
+ <part name="parameters" element="eakte2:GetTransportTemplateCountResponse"/>
+</message>
+
+<message name="GetObtainedTPNosRequest">
+ <part name="parameters" element="eakte2:GetObtainedTPNos"/>
+</message>
+
+<message name="GetObtainedTPNosResponse">
+ <part name="parameters" element="eakte2:GetObtainedTPNosResponse"/>
+</message>
+
+<message name="PeekNextTransportTemplateOrder">
+ <part name="parameters" element="eakte2:PeekNextTransportTemplateOrder"/>
+</message>
+
+<message name="PeekNextTransportTemplateOrderResult">
+ <part name="parameters" element="eakte2:PeekNextTransportTemplateOrderResult"/>
+</message>
+
+<message name="TransportTemplateOrderReceived">
+ <part name="parameters" element="eakte2:TransportTemplateOrderReceived"/>
+</message>
+
+<message name="CreateFileareaTemplate">
+ <part name="parameters" element="eakte2:CreateFileareaTemplate"/>
+</message>
+
+<message name="DeleteFileareaTemplate">
+ <part name="parameters" element="eakte2:DeleteFileareaTemplate"/>
+</message>
+
+<message name="DeleteFileareaTemplateResponse">
+ <part name="parameters" element="eakte2:DeleteFileareaTemplateResponse"/>
+</message>
+
+<message name="ExportFileareaTemplate">
+ <part name="parameters" element="eakte2:ExportFileareaTemplate"/>
+</message>
+
+<message name="GetFileareaTemplateCountRequest">
+ <part name="parameters" element="eakte2:GetFileareaTemplateCount"/>
+</message>
+
+<message name="GetFileareaTemplateCountResponse">
+ <part name="parameters" element="eakte2:GetFileareaTemplateCountResponse"/>
+</message>
+
+<message name="GetNotificationMonitoringData">
+ <part name="parameters" element="eakte2:GetNotificationMonitoringData"/>
+</message>
+
+<message name="getnotificationmonitoringdataresponse">
+ <part name="parameters" element="eakte2:getnotificationmonitoringdataresponse"/>
+</message>
+
+<message name="NotificationMonitoringCheckImportTpFromInboxAllowed">
+ <part name="parameters" element="eakte2:NotificationMonitoringCheckImportTpFromInboxAllowed"/>
+</message>
+
+<message name="notificationmonitoringcheckimporttpfrominboxallowed">
+ <part name="parameters" element="eakte2:notificationmonitoringcheckimporttpfrominboxallowed"/>
+</message>
+
+<message name="FetchDocumentNumbers">
+ <part name="parameters" element="eakte2:FetchDocumentNumbers"/>
+</message>
+
+<message name="resultlist">
+ <part name="parameters" element="eakte2:resultlist"/>
+</message>
+
+<message name="RequestZksAddress">
+ <part name="parameters" element="eakte2:RequestZksAddress"/>
+</message>
+
+<message name="RequestZksAddressComplete">
+ <part name="parameters" element="eakte2:RequestZksAddressComplete"/>
+</message>
+
+<message name="RequestZksAddressCompleteResponse">
+ <part name="parameters" element="eakte2:RequestZksAddressCompleteResponse"/>
+</message>
+
+<message name="SearchZksBoxes">
+ <part name="parameters" element="eakte2:SearchZksBoxes"/>
+</message>
+
+<message name="participantregistrationlist">
+ <part name="parameters" element="eakte2:participantregistrationlist"/>
+</message>
+
+<message name="IsacmeParticipant">
+ <part name="parameters" element="eakte2:IsacmeParticipant"/>
+</message>
+
+<message name="ProtobufCommunication">
+ <part name="parameters" element="eakte2:ProtobufCommunication"/>
+</message>
+
+<message name="protobufcommunicationresponse">
+ <part name="parameters" element="eakte2:protobufcommunicationresponse"/>
+</message>
+
+<portType name="acme2_eaktePortType">
+ <operation name="echo">
+  <documentation>Testfunktion: liefert den bereitgestellten String</documentation>
+  <input message="tns:echo"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="OpenSession">
+  <documentation>Eroeffnet eine Sitzung</documentation>
+  <input message="tns:OpenSession"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="OpenSessionWPar">
+  <documentation>Service definition of function eakte2__OpenSessionWPar</documentation>
+  <input message="tns:OpenSessionWPar"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="CloseSession">
+  <documentation>Beendet eine Sitzung</documentation>
+  <input message="tns:CloseSession"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetSessionParameter">
+  <documentation>Service definition of function eakte2__GetSessionParameter</documentation>
+  <input message="tns:GetSessionParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SetSessionParameter">
+  <documentation>Service definition of function eakte2__SetSessionParameter</documentation>
+  <input message="tns:SetSessionParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SetGlobalParameter">
+  <documentation>Service definition of function eakte2__SetGlobalParameter</documentation>
+  <input message="tns:SetGlobalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetGlobalParameter">
+  <documentation>Service definition of function eakte2__GetGlobalParameter</documentation>
+  <input message="tns:GetGlobalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="CreateNewFile">
+  <documentation>Service definition of function eakte2__CreateNewFile</documentation>
+  <input message="tns:CreateNewFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DeleteFile">
+  <documentation>Service definition of function eakte2__DeleteFile</documentation>
+  <input message="tns:DeleteFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetCurrentViewOfFiles">
+  <documentation>Service definition of function eakte2__GetCurrentViewOfFiles</documentation>
+  <input message="tns:GetCurrentViewOfFiles"/>
+  <output message="tns:fileviewlist"/>
+ </operation>
+ <operation name="GetHistoryViewOfFiles">
+  <documentation>Service definition of function eakte2__GetHistoryViewOfFiles</documentation>
+  <input message="tns:GetHistoryViewOfFiles"/>
+  <output message="tns:fileviewlist"/>
+ </operation>
+ <operation name="GetFileParticipant">
+  <documentation>Service definition of function eakte2__GetFileParticipant</documentation>
+  <input message="tns:GetFileParticipant"/>
+  <output message="tns:participant"/>
+ </operation>
+ <operation name="SetLocalParameter">
+  <documentation>Service definition of function eakte2__SetLocalParameter</documentation>
+  <input message="tns:SetLocalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SetPublicLocalParameter">
+  <documentation>Service definition of function eakte2__SetPublicLocalParameter</documentation>
+  <input message="tns:SetPublicLocalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetLocalParameter">
+  <documentation>Service definition of function eakte2__GetLocalParameter</documentation>
+  <input message="tns:GetLocalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetPublicLocalParameter">
+  <documentation>Service definition of function eakte2__GetPublicLocalParameter</documentation>
+  <input message="tns:GetPublicLocalParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetFilesByLocalParameter">
+  <documentation>Service definition of function eakte2__GetFilesByLocalParameter</documentation>
+  <input message="tns:GetFilesByLocalParameterRequest"/>
+  <output message="tns:GetFilesByLocalParameterResponse"/>
+ </operation>
+ <operation name="GetFilesByPublicLocalParameter">
+  <documentation>Service definition of function eakte2__GetFilesByPublicLocalParameter</documentation>
+  <input message="tns:GetFilesByPublicLocalParameterRequest"/>
+  <output message="tns:GetFilesByPublicLocalParameterResponse"/>
+ </operation>
+ <operation name="SetDocumentParameter">
+  <documentation>Service definition of function eakte2__SetDocumentParameter</documentation>
+  <input message="tns:SetDocumentParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetDocumentParameter">
+  <documentation>Service definition of function eakte2__GetDocumentParameter</documentation>
+  <input message="tns:GetDocumentParameter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetDocumentsByParameter">
+  <documentation>Service definition of function eakte2__GetDocumentsByParameter</documentation>
+  <input message="tns:GetDocumentsByParameterRequest"/>
+  <output message="tns:GetDocumentsByParameterResponse"/>
+ </operation>
+ <operation name="FindFilesToDocument">
+  <documentation>Service definition of function eakte2__FindFilesToDocument</documentation>
+  <input message="tns:FindFilesToDocument"/>
+  <output message="tns:docandfileidlist"/>
+ </operation>
+ <operation name="ImportDocumentToFileArea">
+  <documentation>Service definition of function eakte2__ImportDocumentToFileArea</documentation>
+  <input message="tns:ImportDocumentToFileArea"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportDocumentToFile">
+  <documentation>Service definition of function eakte2__ImportDocumentToFile</documentation>
+  <input message="tns:ImportDocumentToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportToDocument">
+  <documentation>Service definition of function eakte2__ImportToDocument</documentation>
+  <input message="tns:ImportToDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportNewDocumentToFile">
+  <documentation>Service definition of function eakte2__ImportNewDocumentToFile</documentation>
+  <input message="tns:ImportNewDocumentToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="AssignRefIdToFile">
+  <documentation>Service definition of function eakte2__AssignRefIdToFile</documentation>
+  <input message="tns:AssignRefIdToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetFileByRefId">
+  <documentation>Service definition of function eakte2__GetFileByRefId</documentation>
+  <input message="tns:GetFileByRefId"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SetFileMainDocument">
+  <documentation>Service definition of function eakte2__SetFileMainDocument</documentation>
+  <input message="tns:SetFileMainDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="MergeFiles">
+  <documentation>Service definition of function eakte2__MergeFiles</documentation>
+  <input message="tns:MergeFiles"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="OpenSubmission">
+  <documentation>Service definition of function eakte2__OpenSubmission</documentation>
+  <input message="tns:OpenSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="CancelSubmission">
+  <documentation>Service definition of function eakte2__CancelSubmission</documentation>
+  <input message="tns:CancelSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="HoldSubmission">
+  <documentation>Service definition of function eakte2__HoldSubmission</documentation>
+  <input message="tns:HoldSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="RejectSubmission">
+  <documentation>Service definition of function eakte2__RejectSubmission</documentation>
+  <input message="tns:RejectSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="CompleteSubmission">
+  <documentation>Service definition of function eakte2__CompleteSubmission</documentation>
+  <input message="tns:CompleteSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetAllSubmissions">
+  <documentation>Service definition of function eakte2__GetAllSubmissions</documentation>
+  <input message="tns:GetAllSubmissionsRequest"/>
+  <output message="tns:GetAllSubmissionsResponse"/>
+ </operation>
+ <operation name="GetNewSubmissions">
+  <documentation>Service definition of function eakte2__GetNewSubmissions</documentation>
+  <input message="tns:GetNewSubmissionsRequest"/>
+  <output message="tns:GetNewSubmissionsResponse"/>
+ </operation>
+ <operation name="GetCompletedSubmissions">
+  <documentation>Service definition of function eakte2__GetCompletedSubmissions</documentation>
+  <input message="tns:GetCompletedSubmissionsRequest"/>
+  <output message="tns:GetCompletedSubmissionsResponse"/>
+ </operation>
+ <operation name="GetRejectedSubmissions">
+  <documentation>Service definition of function eakte2__GetRejectedSubmissions</documentation>
+  <input message="tns:GetRejectedSubmissionsRequest"/>
+  <output message="tns:GetRejectedSubmissionsResponse"/>
+ </operation>
+ <operation name="DiscardFinishedSubmission">
+  <documentation>Service definition of function eakte2__DiscardFinishedSubmission</documentation>
+  <input message="tns:DiscardFinishedSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SetLocalSubmission">
+  <documentation>Service definition of function eakte2__SetLocalSubmission</documentation>
+  <input message="tns:SetLocalSubmission"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="RelinquishOwnership">
+  <documentation>Service definition of function eakte2__RelinquishOwnership</documentation>
+  <input message="tns:RelinquishOwnership"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GrantAccessToFile">
+  <documentation>Service definition of function eakte2__GrantAccessToFile</documentation>
+  <input message="tns:GrantAccessToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="RevokeAccessFromFile">
+  <documentation>Service definition of function eakte2__RevokeAccessFromFile</documentation>
+  <input message="tns:RevokeAccessFromFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="SendDocument">
+  <documentation>Service definition of function eakte2__SendDocument</documentation>
+  <input message="tns:SendDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DeliverDocument">
+  <documentation>Service definition of function eakte2__DeliverDocument</documentation>
+  <input message="tns:DeliverDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="QueryDeliveryLog">
+  <documentation>Service definition of function eakte2__QueryDeliveryLog</documentation>
+  <input message="tns:QueryDeliveryLog"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="FetchQueryResult">
+  <documentation>Service definition of function eakte2__FetchQueryResult</documentation>
+  <input message="tns:FetchQueryResult"/>
+  <output message="tns:FetchQueryResultResponse"/>
+ </operation>
+ <operation name="GetDeliveryDetails">
+  <documentation>Service definition of function eakte2__GetDeliveryDetails</documentation>
+  <input message="tns:GetDeliveryDetails"/>
+  <output message="tns:GetDeliveryDetailsResponse"/>
+ </operation>
+ <operation name="StartQuery">
+  <documentation>Service definition of function eakte2__StartQuery</documentation>
+  <input message="tns:StartQuery"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="External">
+  <documentation>Service definition of function eakte2__External</documentation>
+  <input message="tns:External"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportTransportDocument">
+  <documentation>Service definition of function eakte2__ImportTransportDocument</documentation>
+  <input message="tns:ImportTransportDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportTransportDocumentFromInbox">
+  <documentation>Service definition of function eakte2__ImportTransportDocumentFromInbox</documentation>
+  <input message="tns:ImportTransportDocumentFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetNextTransportDocument">
+  <documentation>Service definition of function eakte2__GetNextTransportDocument</documentation>
+  <input message="tns:GetNextTransportDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="PeekNextTransportDocument">
+  <documentation>Service definition of function eakte2__PeekNextTransportDocument</documentation>
+  <input message="tns:PeekNextTransportDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="TransportDocumentReceived">
+  <documentation>Service definition of function eakte2__TransportDocumentReceived</documentation>
+  <input message="tns:TransportDocumentReceived"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetDocumentByIdent">
+  <documentation>Service definition of function eakte2__GetDocumentByIdent</documentation>
+  <input message="tns:GetDocumentByIdentRequest"/>
+  <output message="tns:GetDocumentByIdentResponse"/>
+ </operation>
+ <operation name="GetTransportDocumentByIdent">
+  <documentation>Service definition of function eakte2__GetTransportDocumentByIdent</documentation>
+  <input message="tns:GetTransportDocumentByIdent"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetNextFileAreaDocument">
+  <documentation>Service definition of function eakte2__GetNextFileAreaDocument</documentation>
+  <input message="tns:GetNextFileAreaDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="PeekNextFileAreaDocument">
+  <documentation>Service definition of function eakte2__PeekNextFileAreaDocument</documentation>
+  <input message="tns:PeekNextFileAreaDocument"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="FileAreaDocumentReceived">
+  <documentation>Service definition of function eakte2__FileAreaDocumentReceived</documentation>
+  <input message="tns:FileAreaDocumentReceived"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="GetCurrentViewOfDocuments">
+  <documentation>Service definition of function eakte2__GetCurrentViewOfDocuments</documentation>
+  <input message="tns:GetCurrentViewOfDocuments"/>
+  <output message="tns:documentviewlist"/>
+ </operation>
+ <operation name="GetHistoryViewOfDocuments">
+  <documentation>Service definition of function eakte2__GetHistoryViewOfDocuments</documentation>
+  <input message="tns:GetHistoryViewOfDocuments"/>
+  <output message="tns:documentviewlist"/>
+ </operation>
+ <operation name="GetDocumentParticipant">
+  <documentation>Service definition of function eakte2__GetDocumentParticipant</documentation>
+  <input message="tns:GetDocumentParticipant"/>
+  <output message="tns:participant"/>
+ </operation>
+ <operation name="ExportCurrentDocument">
+  <documentation>Service definition of function eakte2__ExportCurrentDocument</documentation>
+  <input message="tns:ExportCurrentDocument"/>
+  <output message="tns:export"/>
+ </operation>
+ <operation name="ExportHistoryDocument">
+  <documentation>Service definition of function eakte2__ExportHistoryDocument</documentation>
+  <input message="tns:ExportHistoryDocument"/>
+  <output message="tns:export"/>
+ </operation>
+ <operation name="SetDocumentOutdated">
+  <documentation>Service definition of function eakte2__SetDocumentOutdated</documentation>
+  <input message="tns:SetDocumentOutdated"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DeleteDocumentFromFile">
+  <documentation>Service definition of function eakte2__DeleteDocumentFromFile</documentation>
+  <input message="tns:DeleteDocumentFromFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="RecoverDeletedDocumentToFile">
+  <documentation>Service definition of function eakte2__RecoverDeletedDocumentToFile</documentation>
+  <input message="tns:RecoverDeletedDocumentToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="MoveDocumentToFile">
+  <documentation>Service definition of function eakte2__MoveDocumentToFile</documentation>
+  <input message="tns:MoveDocumentToFile"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ChangeDocumentPrivacyLevel">
+  <documentation>Service definition of function eakte2__ChangeDocumentPrivacyLevel</documentation>
+  <input message="tns:ChangeDocumentPrivacyLevel"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="MarkDocumentAsReadByUser">
+  <documentation>Service definition of function eakte2__MarkDocumentAsReadByUser</documentation>
+  <input message="tns:MarkDocumentAsReadByUser"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportDocumentToFileAreaFromInbox">
+  <documentation>Service definition of function eakte2__ImportDocumentToFileAreaFromInbox</documentation>
+  <input message="tns:ImportDocumentToFileAreaFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportDocumentToFileFromInbox">
+  <documentation>Service definition of function eakte2__ImportDocumentToFileFromInbox</documentation>
+  <input message="tns:ImportDocumentToFileFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportToDocumentInFileFromInbox">
+  <documentation>Service definition of function eakte2__ImportToDocumentInFileFromInbox</documentation>
+  <input message="tns:ImportToDocumentInFileFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ImportNewDocumentToFileFromInbox">
+  <documentation>Service definition of function eakte2__ImportNewDocumentToFileFromInbox</documentation>
+  <input message="tns:ImportNewDocumentToFileFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ListInbox">
+  <documentation>Service definition of function eakte2__ListInbox</documentation>
+  <input message="tns:ListInboxRequest"/>
+  <output message="tns:ListInboxResponse"/>
+ </operation>
+ <operation name="MarkDocumentsAsReadInInbox">
+  <documentation>Service definition of function eakte2__MarkDocumentsAsReadInInbox</documentation>
+  <input message="tns:MarkDocumentsAsReadInInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="RemoveDocumentsFromInbox">
+  <documentation>Service definition of function eakte2__RemoveDocumentsFromInbox</documentation>
+  <input message="tns:RemoveDocumentsFromInbox"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ApplyInboxFilter">
+  <documentation>Service definition of function eakte2__ApplyInboxFilter</documentation>
+  <input message="tns:ApplyInboxFilter"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="UploadAttachment">
+  <documentation>Service definition of function eakte2__UploadAttachment</documentation>
+  <input message="tns:UploadAttachment"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DownloadAttachment">
+  <documentation>Service definition of function eakte2__DownloadAttachment</documentation>
+  <input message="tns:DownloadAttachment"/>
+  <output message="tns:export"/>
+ </operation>
+ <operation name="UploadToGlobalStorage">
+  <documentation>Service definition of function eakte2__UploadToGlobalStorage</documentation>
+  <input message="tns:UploadToGlobalStorage"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DownloadFromGlobalStorage">
+  <documentation>Service definition of function eakte2__DownloadFromGlobalStorage</documentation>
+  <input message="tns:DownloadFromGlobalStorage"/>
+  <output message="tns:DownloadFromGlobalStorageResult"/>
+ </operation>
+ <operation name="DBInsert">
+  <documentation>Service definition of function eakte2__DBInsert</documentation>
+  <input message="tns:DBInsert"/>
+  <output message="tns:DBInsertResponse"/>
+ </operation>
+ <operation name="DBSynchronize">
+  <documentation>Service definition of function eakte2__DBSynchronize</documentation>
+  <input message="tns:DBSynchronize"/>
+  <output message="tns:DBSynchronizeResponse"/>
+ </operation>
+ <operation name="DBLookup">
+  <documentation>Service definition of function eakte2__DBLookup</documentation>
+  <input message="tns:DBLookup"/>
+  <output message="tns:DBLookupResponse"/>
+ </operation>
+ <operation name="DBSelect">
+  <documentation>Service definition of function eakte2__DBSelect</documentation>
+  <input message="tns:DBSelect"/>
+  <output message="tns:DBSelectResponse"/>
+ </operation>
+ <operation name="DBDelete">
+  <documentation>Service definition of function eakte2__DBDelete</documentation>
+  <input message="tns:DBDelete"/>
+  <output message="tns:DBDeleteResponse"/>
+ </operation>
+ <operation name="DBDescribe">
+  <documentation>Service definition of function eakte2__DBDescribe</documentation>
+  <input message="tns:DBDescribe"/>
+  <output message="tns:DBDescribeResponse"/>
+ </operation>
+ <operation name="DBFunction">
+  <documentation>Service definition of function eakte2__DBFunction</documentation>
+  <input message="tns:DBFunction"/>
+  <output message="tns:DBFunctionResponse"/>
+ </operation>
+ <operation name="CreateTransportTemplate">
+  <documentation>Service definition of function eakte2__CreateTransportTemplate</documentation>
+  <input message="tns:CreateTransportTemplate"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DeleteTransportTemplate">
+  <documentation>Service definition of function eakte2__DeleteTransportTemplate</documentation>
+  <input message="tns:DeleteTransportTemplate"/>
+  <output message="tns:DeleteTransportTemplateResponse"/>
+ </operation>
+ <operation name="ExportTransportTemplate">
+  <documentation>Service definition of function eakte2__ExportTransportTemplate</documentation>
+  <input message="tns:ExportTransportTemplate"/>
+  <output message="tns:export"/>
+ </operation>
+ <operation name="GetTransportTemplateCount">
+  <documentation>Service definition of function eakte2__GetTransportTemplateCount</documentation>
+  <input message="tns:GetTransportTemplateCountRequest"/>
+  <output message="tns:GetTransportTemplateCountResponse"/>
+ </operation>
+ <operation name="GetObtainedTPNos">
+  <documentation>Service definition of function eakte2__GetObtainedTPNos</documentation>
+  <input message="tns:GetObtainedTPNosRequest"/>
+  <output message="tns:GetObtainedTPNosResponse"/>
+ </operation>
+ <operation name="PeekNextTransportTemplateOrder">
+  <documentation>Service definition of function eakte2__PeekNextTransportTemplateOrder</documentation>
+  <input message="tns:PeekNextTransportTemplateOrder"/>
+  <output message="tns:PeekNextTransportTemplateOrderResult"/>
+ </operation>
+ <operation name="TransportTemplateOrderReceived">
+  <documentation>Service definition of function eakte2__TransportTemplateOrderReceived</documentation>
+  <input message="tns:TransportTemplateOrderReceived"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="CreateFileareaTemplate">
+  <documentation>Service definition of function eakte2__CreateFileareaTemplate</documentation>
+  <input message="tns:CreateFileareaTemplate"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="DeleteFileareaTemplate">
+  <documentation>Service definition of function eakte2__DeleteFileareaTemplate</documentation>
+  <input message="tns:DeleteFileareaTemplate"/>
+  <output message="tns:DeleteFileareaTemplateResponse"/>
+ </operation>
+ <operation name="ExportFileareaTemplate">
+  <documentation>Service definition of function eakte2__ExportFileareaTemplate</documentation>
+  <input message="tns:ExportFileareaTemplate"/>
+  <output message="tns:export"/>
+ </operation>
+ <operation name="GetFileareaTemplateCount">
+  <documentation>Service definition of function eakte2__GetFileareaTemplateCount</documentation>
+  <input message="tns:GetFileareaTemplateCountRequest"/>
+  <output message="tns:GetFileareaTemplateCountResponse"/>
+ </operation>
+ <operation name="GetNotificationMonitoringData">
+  <documentation>Service definition of function eakte2__GetNotificationMonitoringData</documentation>
+  <input message="tns:GetNotificationMonitoringData"/>
+  <output message="tns:getnotificationmonitoringdataresponse"/>
+ </operation>
+ <operation name="NotificationMonitoringCheckImportTpFromInboxAllowed">
+  <documentation>Service definition of function eakte2__NotificationMonitoringCheckImportTpFromInboxAllowed</documentation>
+  <input message="tns:NotificationMonitoringCheckImportTpFromInboxAllowed"/>
+  <output message="tns:notificationmonitoringcheckimporttpfrominboxallowed"/>
+ </operation>
+ <operation name="FetchDocumentNumbers">
+  <documentation>Service definition of function eakte2__FetchDocumentNumbers</documentation>
+  <input message="tns:FetchDocumentNumbers"/>
+  <output message="tns:resultlist"/>
+ </operation>
+ <operation name="RequestZksAddress">
+  <documentation>Service definition of function eakte2__RequestZksAddress</documentation>
+  <input message="tns:RequestZksAddress"/>
+  <output message="tns:participant"/>
+ </operation>
+ <operation name="RequestZksAddressComplete">
+  <documentation>Service definition of function eakte2__RequestZksAddressComplete</documentation>
+  <input message="tns:RequestZksAddressComplete"/>
+  <output message="tns:RequestZksAddressCompleteResponse"/>
+ </operation>
+ <operation name="SearchZksBoxes">
+  <documentation>Service definition of function eakte2__SearchZksBoxes</documentation>
+  <input message="tns:SearchZksBoxes"/>
+  <output message="tns:participantregistrationlist"/>
+ </operation>
+ <operation name="IsacmeParticipant">
+  <documentation>Service definition of function eakte2__IsacmeParticipant</documentation>
+  <input message="tns:IsacmeParticipant"/>
+  <output message="tns:result"/>
+ </operation>
+ <operation name="ProtobufCommunication">
+  <documentation>Service definition of function eakte2__ProtobufCommunication</documentation>
+  <input message="tns:ProtobufCommunication"/>
+  <output message="tns:protobufcommunicationresponse"/>
+ </operation>
+</portType>
+
+<binding name="acme2_eakte" type="tns:acme2_eaktePortType">
+ <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="echo">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="OpenSession">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="OpenSessionWPar">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CloseSession">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetSessionParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetSessionParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetGlobalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetGlobalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CreateNewFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DeleteFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetCurrentViewOfFiles">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetHistoryViewOfFiles">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetFileParticipant">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetPublicLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetPublicLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetFilesByLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetFilesByPublicLocalParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetDocumentParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetDocumentParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetDocumentsByParameter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="FindFilesToDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportDocumentToFileArea">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportDocumentToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportToDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportNewDocumentToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="AssignRefIdToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetFileByRefId">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetFileMainDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="MergeFiles">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="OpenSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CancelSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="HoldSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RejectSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CompleteSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetAllSubmissions">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetNewSubmissions">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetCompletedSubmissions">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetRejectedSubmissions">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DiscardFinishedSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetLocalSubmission">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RelinquishOwnership">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GrantAccessToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RevokeAccessFromFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SendDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DeliverDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="QueryDeliveryLog">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="FetchQueryResult">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetDeliveryDetails">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="StartQuery">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="External">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportTransportDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportTransportDocumentFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetNextTransportDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="PeekNextTransportDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="TransportDocumentReceived">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetDocumentByIdent">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetTransportDocumentByIdent">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetNextFileAreaDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="PeekNextFileAreaDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="FileAreaDocumentReceived">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetCurrentViewOfDocuments">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetHistoryViewOfDocuments">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetDocumentParticipant">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ExportCurrentDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ExportHistoryDocument">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SetDocumentOutdated">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DeleteDocumentFromFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RecoverDeletedDocumentToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="MoveDocumentToFile">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ChangeDocumentPrivacyLevel">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="MarkDocumentAsReadByUser">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportDocumentToFileAreaFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportDocumentToFileFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportToDocumentInFileFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ImportNewDocumentToFileFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ListInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="MarkDocumentsAsReadInInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RemoveDocumentsFromInbox">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ApplyInboxFilter">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="UploadAttachment">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DownloadAttachment">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="UploadToGlobalStorage">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DownloadFromGlobalStorage">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBInsert">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBSynchronize">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBLookup">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBSelect">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBDelete">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBDescribe">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DBFunction">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CreateTransportTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DeleteTransportTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ExportTransportTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetTransportTemplateCount">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetObtainedTPNos">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="PeekNextTransportTemplateOrder">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="TransportTemplateOrderReceived">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="CreateFileareaTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="DeleteFileareaTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ExportFileareaTemplate">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetFileareaTemplateCount">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="GetNotificationMonitoringData">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="NotificationMonitoringCheckImportTpFromInboxAllowed">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="FetchDocumentNumbers">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RequestZksAddress">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="RequestZksAddressComplete">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="SearchZksBoxes">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="IsacmeParticipant">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="ProtobufCommunication">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="acme2_eakte">
+ <documentation>gSOAP 2.7.6c generated service definition</documentation>
+ <port name="acme2_eakte" binding="tns:acme2_eakte">
+  <SOAP:address location="https://testarea.myhost.com/ws/ws.php"/>
+ </port>
+</service>
+
+</definitions>
