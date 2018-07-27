@@ -16,6 +16,8 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.EndpointImpl;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.ws.policy.AssertionBuilderRegistry;
+import org.apache.cxf.ws.policy.PolicyInterceptorProviderRegistry;
 import org.apache.cxf.ws.policy.WSPolicyFeature;
 import org.apache.cxf.ws.security.wss4j.PolicyBasedWSS4JOutInterceptor;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
@@ -24,6 +26,8 @@ import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.handler.WSHandlerConstants;
 import org.junit.Test;
 
+import com.axonivy.connectivity.ws.saml.SAPEnabledAssertionBuilder;
+import com.axonivy.connectivity.ws.saml.SAPEnabledPolicyProvider;
 import com.axonivy.connectivity.ws.saml.SapSamlProtectedEchoCxf;
 
 import person.service.soap.client.WebServiceProcessTechnicalException;
@@ -34,12 +38,7 @@ public class IntegrationTestCxfSaml {
 	@Test
 	public void callWsSecuredService() throws MalformedURLException,
 			WebServiceProcessTechnicalException, URISyntaxException {
-		WSPolicyFeature ignorePolicy = new WSPolicyFeature();
-				
-		ignorePolicy.setIgnoreUnknownAssertions(true);
-		ignorePolicy.setEnabled(false);
-		
-		ZCAPUGECHO service = SapSamlProtectedEchoCxf.service(ignorePolicy).getZCAPUGECHO();
+		ZCAPUGECHO service = SapSamlProtectedEchoCxf.service().getZCAPUGECHO();
 		
 		IntegrationTestCxfStockQuote.installSoapLogger(service);
 		installWsSecurityHeader(service);
@@ -57,12 +56,12 @@ public class IntegrationTestCxfSaml {
 		EndpointImpl endpoint = (EndpointImpl) client.getEndpoint();
 		AbstractPhaseInterceptor<?>  wssOut = new PolicyBasedWSS4JOutInterceptor();
 		endpoint.getOutInterceptors().add(wssOut);
-		/*
+		
 		endpoint.getBus().getExtension(PolicyInterceptorProviderRegistry.class)
 			.register(new SAPEnabledPolicyProvider());
 		endpoint.getBus().getExtension(AssertionBuilderRegistry.class)
 			.registerBuilder(new SAPEnabledAssertionBuilder());
-			*/
+			
 	}
 
 	private WSS4JOutInterceptor usernameTokenInterceptor() {
