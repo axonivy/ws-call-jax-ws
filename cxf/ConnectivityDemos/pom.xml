@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.ivyteam.ivy.project.demo</groupId>
 	<artifactId>connectivity-demos</artifactId>
@@ -9,7 +10,7 @@
 	<packaging>iar</packaging>
 
 	<properties>
-		<cxf.version>3.2.0</cxf.version>
+		<cxf.version>3.2.5</cxf.version>
 	</properties>
 
 	<dependencies>
@@ -24,14 +25,14 @@
 			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.cxf</groupId>
-		    <artifactId>cxf-rt-features-logging</artifactId>
-		    <version>${cxf.version}</version>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-features-logging</artifactId>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.cxf</groupId>
-		    <artifactId>cxf-rt-ws-security</artifactId>
-		    <version>${cxf.version}</version>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>${cxf.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -130,15 +131,40 @@
 									<extraargs>
 										<!-- valid args are documented here: http://cxf.apache.org/docs/wsdl-to-java.html -->
 										<extraarg>-verbose</extraarg>
-										<!-- avoid errors as the same complex names is present multiple times in the WSDL. see NotificationMonitoringCheckImportTpFromInboxAllowed -->
+										<!-- avoid errors as the same complex names is present multiple 
+											times in the WSDL. see NotificationMonitoringCheckImportTpFromInboxAllowed -->
 										<extraarg>-autoNameResolution</extraarg>
 									</extraargs>
 								</wsdlOption>
 							</wsdlOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>generate-sources.saml</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/saml/sap_saml.wsdl</wsdl>
+									<extraargs>
+										<!-- valid args are documented here: http://cxf.apache.org/docs/wsdl-to-java.html -->
+										<extraarg>-verbose</extraarg>
+										<!-- avoid errors as the same complex names is present multiple 
+											times in the WSDL. see NotificationMonitoringCheckImportTpFromInboxAllowed -->
+										<extraarg>-autoNameResolution</extraarg>
+										<!-- map to meaningful namespace -->
+										<extraarg>-p</extraarg>
+										<extraarg>urn:sap-com:document:sap:rfc:functions=sap.saml.echo</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
 				</executions>
-				
+
 				<configuration>
 					<sourceRoot>${basedir}/src_generatedCxf</sourceRoot>
 				</configuration>
