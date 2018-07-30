@@ -34,6 +34,11 @@
 			<artifactId>cxf-rt-ws-security</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-ws-mex</artifactId>
+		    <version>${cxf.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -158,6 +163,30 @@
 										<!-- map to meaningful namespace -->
 										<extraarg>-p</extraarg>
 										<extraarg>urn:sap-com:document:sap:rfc:functions=sap.saml.echo</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-sources.saml.mex</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+						<configuration>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/com/axonivy/connectivity/ws/saml/mex/metadaten_dut_https_z_ca_pug_echo.wsdl</wsdl>
+									<extraargs>
+										<!-- valid args are documented here: http://cxf.apache.org/docs/wsdl-to-java.html -->
+										<extraarg>-verbose</extraarg>
+										<!-- avoid errors as the same complex names is present multiple 
+											times in the WSDL. see NotificationMonitoringCheckImportTpFromInboxAllowed -->
+										<extraarg>-autoNameResolution</extraarg>
+										<!-- map to meaningful namespace -->
+										<extraarg>-p</extraarg>
+										<extraarg>urn:sap-com:document:sap:rfc:functions=sap.saml.mex.echo</extraarg>
 									</extraargs>
 								</wsdlOption>
 							</wsdlOptions>
