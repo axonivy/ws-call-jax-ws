@@ -8,6 +8,9 @@ import org.apache.neethi.builders.AssertionBuilder;
 import org.apache.wss4j.policy.SPConstants;
 import org.w3c.dom.Element;
 
+/**
+ * ignore SAP assertions
+ */
 public class SAPEnabledAssertionBuilder implements AssertionBuilder<Element> {
 
 	@Override
