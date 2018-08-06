@@ -20,5 +20,8 @@
 	<classpathentry kind="lib" path="lib/jersey-common-2.22.2.jar"/>
 	<classpathentry kind="lib" path="lib/oauth1-client-2.22.2.jar"/>
 	<classpathentry kind="lib" path="lib/oauth1-signature-2.22.2.jar"/>
+	<classpathentry kind="lib" path="lib/pingId/opentoken-adapter-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/pingId/opentoken-agent-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/pingId/sts-client-api-1.1.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
