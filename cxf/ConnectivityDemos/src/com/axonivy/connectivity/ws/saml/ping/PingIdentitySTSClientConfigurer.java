@@ -29,6 +29,19 @@ import com.pingidentity.sts.clientapi.SecurityTokenException;
 import com.pingidentity.sts.clientapi.protocol.STSMessage;
 import com.pingidentity.sts.clientapi.tokens.wsse.BinaryToken;
 
+/**
+ * @author rew
+ * 
+ * Ways towards a stable dropin:
+ * - implement as feature that can be enabled on demand
+ * - configure via feature context (agentPassword, tokenSubject, Username, Issuer...)
+ * - extend logging: user webservice runtime logger of axon.ivy
+ * - draft a token message that looks exactly like the one create by the proprietary pingIdentity stack. (yet we only re-use the BinaryToken header)
+ * - STSMessage(String action) may should not be hardcoded but re-used from the real message of the CXF stack
+ * - check wether the {@link Configurer} can really be safely overriden (as it is already set by Axon.ivy)
+ * - pack as OSGi bundle that can be installed via simple dropin mechanism
+ * 
+ */
 public class PingIdentitySTSClientConfigurer implements Configurer
 {
 	private final Configurer original;
